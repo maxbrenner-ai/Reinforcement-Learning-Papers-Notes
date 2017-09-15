@@ -613,7 +613,7 @@ a different distribution of picking which transitions to use than the distributi
 are actually biasing it to train the agent based off of a wrong representation of the env dynamics which means
 it will actually converge to a different solution than the one actually represented by the problem and what
 the expectation would have been has it not been for a biased exp replay updating
-- So if you multiply the TD Error (aka how you're updating the agent) by the inverse of the priority thank you
+- So if you multiply the TD Error (aka how you're updating the agent) by the inverse of the priority you
 can help decrease the bias a bit
 - So also as the agent continues in an episode it will get more and more off in its choices if you aren't
 using IS (or enough of it) cuz it will get more and more off a trajectory that
