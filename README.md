@@ -21,8 +21,7 @@ Look at end of doc for a list of shorthands used. However, it should be self exp
 - This alg ensures monotonic improvement of policies (aka helps with policy optimization)
 - Lots of math involved in the proofs and equations so need to review this some more
 
-### Combining Policy Gradient and Q-Learning (PGQ)
-https://arxiv.org/pdf/1611.01626.pdf
+### [Combining Policy Gradient](https://arxiv.org/pdf/1611.01626.pdf) and Q-Learning (PGQ)
 - This alg’s goal is to combine Actor-Critic and Q-Learning
 - The alg works like normal A2C or A3C for the most part (exactly the same)
 - But every transition is saved in a collective memory (if there are multiple agents aka A3C)
@@ -34,8 +33,7 @@ https://arxiv.org/pdf/1611.01626.pdf
 
 
 ## Imitation, Demonstration and Semi-Supervised Learning
-### Generative Adversarial Nets (GAN)
-https://arxiv.org/pdf/1406.2661.pdf
+### [Generative Adversarial Nets](https://arxiv.org/pdf/1406.2661.pdf) (GAN)
 - The purpose of this alg is to train a generative model (aka a model that can make data aka learn the same
 data distribution of the training data)
 - It does this by also training its adversary, a discriminator model, that tries to predict if the data it is
@@ -50,8 +48,7 @@ model uses to create data (also the higher D(x) the more it predicts the data is
 to keep the generator inline, the generators only clue as to how good it is doing is through the discriminator
 which should always be kept close to optimal for this reason
 
-### Generative Adversarial Imitation Learning (GAIL)
-https://arxiv.org/pdf/1701.07274.pdf
+### [Generative Adversarial Imitation Learning](https://arxiv.org/pdf/1701.07274.pdf) (GAIL)
 - MATH WARNING
 - IRL (Inverse Reinforcement Learning) attempts to learn a reward function based off of an example’s policy
 trajectories, however the RL alg part runs in an inner loop of this aka it's a very computationally inefficient
@@ -64,8 +61,7 @@ policy
 of their trajectories we update the discriminator using a supervised kind of method on it. and we update
 the imitator using the TRPO rule with log(D(s,a)) as the cost (-log(D(s,a)) as reward)
 
-### Learning from Demonstrations for Real World Reinforcement Learning (DQfD)
-https://arxiv.org/pdf/1704.03732.pdf
+### [Learning from Demonstrations for Real World Reinforcement Learning](https://arxiv.org/pdf/1704.03732.pdf) (DQfD)
 - Deep Q-Learning from Demonstrations (DQfD)
 - This is an alg for imitation learning when you have demonstration data by some expert policy but not the
 expert policy itself (unlike in IRL and GAIL which does have an expert policy to generate trajectories)
@@ -76,8 +72,7 @@ on the expert trajectories/data
 are also used in normal training 
     - the whole alg is DQN which is how you pick the actions, and this is why exp replay is used (it's just the loss function           (the 4 losses added) that is the substitute for normal MSE)
 
-### Generalizing Skills with Semi-Supervised Reiforcement Learning (S3G)
-https://arxiv.org/pdf/1612.00429.pdf
+### [Generalizing Skills with Semi-Supervised Reiforcement Learning](https://arxiv.org/pdf/1612.00429.pdf) (S3G)
 - Semi-Supervised Skill Generalization (S3G)
 - This alg is used when you have limited labeled data and unlabeled data, in other words you have MDPs or trajectories
 with reward labels and also unlabeled experience available from MDPs with no reward labels (this is most of
@@ -104,8 +99,7 @@ from the MDP allows us to generalize more readily because it's not attached to a
 
 
 ## Planning
-### Value Iteration Networks (VIN)
-https://arxiv.org/pdf/1602.02867.pdf
+### [Value Iteration Networks](https://arxiv.org/pdf/1602.02867.pdf) (VIN)
 - This allows for planning using value iteration
 - Not model-based because we aren't directly learning a model of M but planning off of M_
 - So if M is the MDP we can find M_ which is an MDP that gives info about the optimal plan for the specific M,
@@ -129,8 +123,7 @@ can be made through planning
 
 
 ## Exploration
-### Incentivizing Exploration In Reinforcement Learning With Deep Predictive Models
-https://arxiv.org/pdf/1507.00814.pdf
+### [Incentivizing Exploration In Reinforcement Learning With Deep Predictive Models](https://arxiv.org/pdf/1507.00814.pdf)
 - Exploration bonuses can help with exploring, called "optimism under uncertainty"
     - r = r + beta * N(s,a)
     - the reward has a novelty function value added to it
@@ -152,14 +145,12 @@ the difference by using an euclidean loss function, the novelty bonus is then ju
 - And we train the autoencoder even less (because it takes a long time to train since it must reconstruct and compare
 the WHOLE state aka all the pixels every time)
 
-### Deep Exploration via Bootstrapped DQN (Under Construction)
-https://arxiv.org/pdf/1602.04621.pdf
+### [Deep Exploration via Bootstrapped DQN](https://arxiv.org/pdf/1602.04621.pdf) (Under Construction)
 - MATH WARNING
 - Don't really understand this one but apparently it works better than
 "Incentivizing Exploration In Reinforcement Learning With Deep Predictive Models" for exploration
 
-### Hindsight Experience Replay
-https://arxiv.org/pdf/1707.01495.pdf
+### [Hindsight Experience Replay](https://arxiv.org/pdf/1707.01495.pdf)
 - This alg helps deal with sparse reward environments by using goals to add feedback (UVFA)
 - This alg can train an agent on completing multiple goals or just one, it works better with sparse and binary
 feedback (0 for not completing a goal and 1 for completing the goal)
@@ -183,8 +174,7 @@ the agent to get the feedback it needs to slowly learn how to achieve the real g
 
 
 ## Attention
-### Recurrent Models of Visual Attention (RAM)
-https://arxiv.org/pdf/1406.6247.pdf
+### [Recurrent Models of Visual Attention](https://arxiv.org/pdf/1406.6247.pdf) (RAM)
 - Recurrent Attention Model (RAM)
 - This is a alg/model that is used to process images (classification or even video game playing can be applied)
 - It makes it so the size of the images in the env are independent of the number of params and computation time
@@ -211,8 +201,7 @@ location model params) from the cumulative rewards (or disc rewards)
 and then doing BPTT with these gradients to update the params
 - this had comparable achievement to CNNs
 
-### Show, Attend and Tell: Neural Image Caption Generation with Visual Attention
-https://arxiv.org/pdf/1502.03044.pdf
+### [Show, Attend and Tell: Neural Image Caption Generation with Visual Attention](https://arxiv.org/pdf/1502.03044.pdf)
 - This paper shows how to caption images
 - Unlike the paper "Recurrent Models of Visual Attention (RAM)" the attention mechanism used in this is here
 not to decrease computation time but to focus on specific features of an image every time step and output a word
@@ -239,8 +228,7 @@ of what should be focused on, aka given what's already been focused on it can le
 to focus on to actually understand what it's seeing in the image
 - So another word is output at each step by the decoder that describes what it is seeing overall
 
-### Neural Machine Translation by Jointly Learning to Align and Translate 
-https://arxiv.org/pdf/1409.0473.pdf
+### [Neural Machine Translation by Jointly Learning to Align and Translate](https://arxiv.org/pdf/1409.0473.pdf)
 - This is a new encoder-decoder structure/algorithm for neural machine translation
 - encoder-decoder means an encoder rnn reads in a source sentence into a fixed length vector which is then
 input into the decoder at each step (along with the prev output word)
@@ -266,8 +254,7 @@ what the decoder will output at that timestep as the translation
 - This greatly improves translation abilities of RNNs
 
 ## Unsupervised Learning
-### Reinforcement Learning with Unsupervised Auxiliary Tasks (UNREAL)
-https://arxiv.org/pdf/1611.05397.pdf
+### [Reinforcement Learning with Unsupervised Auxiliary Tasks](https://arxiv.org/pdf/1611.05397.pdf) (UNREAL)
 - We add aux tasks to help in an env with sparse rewards
 - The aux tasks are categorized into control and reward prediction
     - The summary is that learning to better predict certain things and control certain things should
@@ -297,8 +284,7 @@ transitions with feedback more often
 
 
 ## Hierarchical RL
-### Strategic Attentive Writer for Learning Macro-Actions (STRAW)
-https://arxiv.org/pdf/1606.04695.pdf
+### [Strategic Attentive Writer for Learning Macro-Actions](https://arxiv.org/pdf/1606.04695.pdf) (STRAW)
 - This architecture is called STRategic Attentive Writer (STRAW) and is used to learn macro-actions (aka action
 sequences)
 - Macro-actions are helpful because they can help with exploration and learning by finding more complex
@@ -323,8 +309,7 @@ add 1s in the replanning of the commitment plan to change the current macro acti
 each is shifted over aka the first column is removed and the last one has a blank column added to it
 - This was updated using a weird loss function but it used A3C as the base algorithm
 
-### Hierarchical Deep Reinforcement Learning: Integrating Temporal Abstraction and Intrinsic Motivation (h-DQN)
-https://arxiv.org/pdf/1604.06057.pdf
+### [Hierarchical Deep Reinforcement Learning: Integrating Temporal Abstraction and Intrinsic Motivation](https://arxiv.org/pdf/1604.06057.pdf) (h-DQN)
 - Intrinsic motivation means exploring for exploration's sake, in this paper it means more specifically:
 - solving subproblems and goals and chaining them together to allow for more efficient exploration to
 solve the whole problem
@@ -348,8 +333,7 @@ taking loop is inside the meta-controller goal producing loop
 - Another paper on intrinsic motivation for exploration using a pseudo count based method
 https://arxiv.org/pdf/1606.01868.pdf (HARD PAPER, pretty much just math)
 
-### A Deep Hierarchical Approach to Lifelong Learning in Minecraft (H-DRLN)
-https://arxiv.org/pdf/1604.07255.pdf
+### [A Deep Hierarchical Approach to Lifelong Learning in Minecraft](https://arxiv.org/pdf/1604.07255.pdf) (H-DRLN)
 - Hierarchical Deep Reinforcement Learning Network (H-DRLN)
 - This is a 'lifelong learning' network
 - a lifelong learning system is one that leans new skills and retains each of their knowledge as well as
@@ -371,8 +355,7 @@ and does not train the DSNs only the rest of it, this is because the DSNs are pr
 because each DSN is trained separately of it and then there knowledge is distilled together if using the
 multi-task distiller module
 
-### Stochastic Neural Network for Hierarchical Reinforcement Learning (Under Construction)
-https://arxiv.org/pdf/1704.03012.pdf
+### [Stochastic Neural Network for Hierarchical Reinforcement Learning](https://arxiv.org/pdf/1704.03012.pdf) (Under Construction)
 - this is an hierarchical architecture (Need to know more about SNNs to really understand this paper)
 - it is for solving the problem of sparse rewards by adding skills (like in the minecraft paper) aka macro
 actions
@@ -392,8 +375,7 @@ more effectively
 
 
 ## Learning to Learn
-### Learning to Reinforcement Learn
-https://arxiv.org/pdf/1611.05763.pdf
+### [Learning to Reinforcement Learn](https://arxiv.org/pdf/1611.05763.pdf)
 - This allows a low-level system which is an RNN to learn a task while having a high-level system (RL alg)
 do slower general learning over multiple different tasks (although from the same family as one another), this
 allows the rnn to actually learn each different task faster the more tasks it trains on
@@ -413,8 +395,7 @@ high level one, which shows generalization
 - Another note is that once the high-level sys is trained enough you could freeze its training of the RNN
 on the specific task and the RNN will still improve as it goes
 
-### RL^2: Fast Reinforcement Learning via Slow Reinforcement Learning
-https://arxiv.org/pdf/1611.02779.pdf
+### [RL^2: Fast Reinforcement Learning via Slow Reinforcement Learning](https://arxiv.org/pdf/1611.02779.pdf)
 - Like the paper "Learning to Reinforcement Learn"
 - The explanation of at least the RNN was a little clearer, so what is sent in as input at each time step is
 the prev action, current state, reward and termination flag from the prev action
@@ -431,8 +412,7 @@ of the way (only refreshes after a full MDP task is done)
 
 
 ## Imagination-Based Learning
-### Metacontrol for Adaptive Imagination-Based Optimization
-https://arxiv.org/pdf/1705.02670.pdf
+### [Metacontrol for Adaptive Imagination-Based Optimization](https://arxiv.org/pdf/1705.02670.pdf)
 - This architecture is used for balancing computation time with performance because the one-model-fits-all approach
 is not very good as if something is easy you don't want the same complex model working on it as you did a more
 difficult problem and visa versa
@@ -455,8 +435,7 @@ learns how to effectively encode the memory, learns to pick a control policy all
 computation time
 - The main drawback is that this works specifically for contextual bandits only
 
-### Learning Model-based Planning from Scratch (IBP)
-https://arxiv.org/pdf/1707.06170.pdf
+### [Learning Model-based Planning from Scratch](https://arxiv.org/pdf/1707.06170.pdf) (IBP)
 - Imagination-Based Planner (IBP)
 - This algorithm/architecture learns to construct, evaluate and execute plans (it is a model-based alg)
 - Most model-based alg before could eval a plan but not construct one, and they req problem specific knowledge
@@ -490,8 +469,7 @@ separately using different methods (example is manager uses REINFORCE), the loss
 aka it tries to not only optimize task performance but also computation time at the same time, but different parts
 might only care about one or the other (controller and memory only train on the task loss)
 
-### Imagination-Augmented Agents for Deep Reinforcement Learning (I2A)
-https://arxiv.org/pdf/1707.06203.pdf
+### [Imagination-Augmented Agents for Deep Reinforcement Learning](https://arxiv.org/pdf/1707.06203.pdf) (I2A)
 - this implements a new architecture called Imagination-Augmented Agent (I2A)
 - this combines model free rl with model based rl
 - it uses imagination to do it which means using an internal model to learn about the future aka not explicitly
@@ -526,8 +504,7 @@ on this architecture
 
 
 ## Multi-Agent RL
-### Multi-Agent Deep Reinforcement Learning (MADRL)
-http://cs231n.stanford.edu/reports/2016/pdfs/122_Report.pdf
+### [Multi-Agent Deep Reinforcement Learning](http://cs231n.stanford.edu/reports/2016/pdfs/122_Report.pdf) (MADRL)
 - This algorithm (MADRL) shows how to train agents in a multi-agent setting
 - Specifically it works for cooperation (team-based) using the pursuit-evasion domain
 - One of the challenges for multi-agent RL is the training, this algorithm works by only training one agent
@@ -541,8 +518,7 @@ feedforward cost for each agent for selecting an action (uses DQN)
 
 
 ## Misc.
-### Universal Value Function Approximators
-http://proceedings.mlr.press/v37/schaul15.pdf
+### [Universal Value Function Approximators](http://proceedings.mlr.press/v37/schaul15.pdf)
 - UVFA: V(s,g; param) aka it's just like approx a value per state but with a goal added in too, it uses a dif
 reward func for the imm reward which is just based on achieving the goal
     - the imm rewards are no
@@ -558,8 +534,7 @@ is not really an alg, but it can be used in alg where sub goals would help, in t
 exploration and finding sparse rewards
 - Used in the "Hindsight Experience Replay" paper (and a few others in this list)
 
-### A Simple Neural Network Module for Relational Reasoning (RN)
-https://arxiv.org/pdf/1706.01427.pdf
+### [A Simple Neural Network Module for Relational Reasoning](https://arxiv.org/pdf/1706.01427.pdf) (RN)
 - This shows the structure of the Relation Network (RN) in solving complex relational problems
 - You have a MLP g that takes as input a pair of objects (outputs a normal vector), you send in all combos
 of object pairs into g one at a time and then sum up the output for each one into a single vector, then
@@ -580,8 +555,7 @@ through each network in the architecture (aka f, g, CNN and LSTM in no particula
 separate technically, their outputs just feed into one another, it's not a parameterized connection)
 - This is the new state-of-the-art alg/arch for relational reasoning/learning
 
-### Prioritized Experience Replay
-https://arxiv.org/pdf/1511.05952.pdf
+### [Prioritized Experience Replay](https://arxiv.org/pdf/1511.05952.pdf)
 - Instead of uniformly randomly picking which exp to replay from the memory this uses stochastic prioritization based
 off of the most recent TD Error for that transition
 - So the probability of picking each transition is proportional to their TD Error (saved with the transition)
@@ -607,8 +581,7 @@ and mag of the TD Error as you go since it will be getting more and more off sin
 
 
 ## Business Management
-### Recurrent Reinforcement Learning: A Hybrid Approach
-https://arxiv.org/pdf/1509.03044.pdf
+### [Recurrent Reinforcement Learning: A Hybrid Approach](https://arxiv.org/pdf/1509.03044.pdf)
 - An LSTM was used as the NN for this algorithm to learn the states of a POMDP
 - Supervised Learning (LSTM) and Reinforcement Learning (DQN) Hybrid
 - The current observation is fed into the LSTM which outputs the predicted next observation and predicted reward,
@@ -628,8 +601,7 @@ in a synthetic online way, using the crafted simulator, not in real online appli
 
 
 ## Intelligent Transportation Systems
-### Coordinated Deep Reinforcement Learners for Traffic Light Control (Under Construction)
-http://www.fransoliehoek.net/docs/VanDerPol16LICMAS.pdf
+### [Coordinated Deep Reinforcement Learners for Traffic Light Control](http://www.fransoliehoek.net/docs/VanDerPol16LICMAS.pdf) (Under Construction)
 - The problem is optimizing the configurations of traffic lights at intersections
 - The states were visual-esc representations of an intersection (used the traffic simulator SUMO)
 - The actions were selecting which lanes to turn green
@@ -643,8 +615,7 @@ forgets earlier learned structures when trying to learn new structures/scenarios
 
 
 ## Computer Systems
-### Device Placement Optimization with Reinforcement Learning
-https://arxiv.org/pdf/1706.04972.pdf
+### [Device Placement Optimization with Reinforcement Learning](https://arxiv.org/pdf/1706.04972.pdf)
 - This paper optimizes the device (CPU, GPU) placement for TF computational graphs
     - It converts the graph into a list of operations and then this alg optimizes the assignment of each
     operation to a device
