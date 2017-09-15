@@ -154,7 +154,6 @@ the WHOLE state aka all the pixels every time)
 
 ### Deep Exploration via Bootstrapped DQN (Under Construction)
 https://arxiv.org/pdf/1602.04621.pdf
-http://pemami4911.github.io/paper-summaries/deep-rl/2016/08/16/Deep-exploration.html
 - MATH WARNING
 - Don't really understand this one but apparently it works better than
 "Incentivizing Exploration In Reinforcement Learning With Deep Predictive Models" for exploration
