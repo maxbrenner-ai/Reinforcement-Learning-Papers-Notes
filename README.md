@@ -301,8 +301,7 @@ A3C (LSTM and CNN) model to balance improvement of the aux tasks with the improv
 from this memory are samples using a simplified Prioritized Replay method where there is a 50/50 chance to pick
 a transition with a non-zero imm reward and one with a zero reward, this helps with allowing to train on
 transitions with feedback more often
-- *** This alg is the state-of-the-art rl alg, it is better than vanilla A3C, Prioritized Dueling Double DQN
-and the rest of them
+- *** This alg is the state-of-the-art rl alg for sparse reward signals, it is better than vanilla A3C, Prioritized Dueling Double DQN ect. according to the authors
 
 
 ## Hierarchical RL
