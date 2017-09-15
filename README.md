@@ -16,8 +16,7 @@ I don't include notes for these papers or topics because there are plenty of res
 Look at end of doc for a list of shorthands used. However, it should be self explanatory in the notes what the word is.
 
 ## Policy Gradient
-### Trust Region Policy Optimization (TRPO) (Under construction)
-https://arxiv.org/pdf/1502.05477.pdf
+### [Trust Region Policy Optimization](https://arxiv.org/pdf/1502.05477.pdf) (TRPO) (Under construction)
 - MATH WARNING
 - This alg ensures monotonic improvement of policies (aka helps with policy optimization)
 - Lots of math involved in the proofs and equations so need to review this some more
