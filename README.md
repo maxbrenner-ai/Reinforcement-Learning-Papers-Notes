@@ -280,7 +280,7 @@ A3C (LSTM and CNN) model to balance improvement of the aux tasks with the improv
 from this memory are sampled using a simplified Prioritized Replay method where there is a 50/50 chance to pick
 a transition with a non-zero imm reward and one with a zero reward, this helps with allowing to train on
 transitions with feedback more often
-- *** This alg is the state-of-the-art rl alg for sparse reward signals, it is better than vanilla A3C, Prioritized Dueling Double DQN ect. according to the authors
+- This alg is the state-of-the-art rl alg for sparse reward signals, it is better than vanilla A3C, Prioritized Dueling Double DQN ect. according to the authors
 
 
 ## Hierarchical RL
@@ -330,8 +330,7 @@ and also gets trained by replays of this memory (replay/training occurs at same 
 - The temporal abstraction comes because the meta-controller function of getting a new goal (aka feed forward)
 occurs for a fraction of the time the controller is outputting and taking new actions, aka the controller action
 taking loop is inside the meta-controller goal producing loop
-- Another paper on intrinsic motivation for exploration using a pseudo count based method
-https://arxiv.org/pdf/1606.01868.pdf (HARD PAPER, pretty much just math)
+- Another [paper](https://arxiv.org/pdf/1606.01868.pdf) on intrinsic motivation for exploration using a pseudo count based method (HARD PAPER, pretty much just math)
 
 ### [A Deep Hierarchical Approach to Lifelong Learning in Minecraft](https://arxiv.org/pdf/1604.07255.pdf) (H-DRLN)
 - Hierarchical Deep Reinforcement Learning Network (H-DRLN)
@@ -462,7 +461,7 @@ a route which means act, or pick any state in which to imagine a next action fro
 - The controller is also an MLP that represents a policy, inputs: current state and memory encoding, output:
 action
     - This is used for both imagination and execution
-- The Model is an interaction network (https://arxiv.org/pdf/1612.00222.pdf), input: state and action, output
+- The Model is an [interaction network](https://arxiv.org/pdf/1612.00222.pdf), input: state and action, output
 next state and reward aka it maps states and actions to next states and rewards
 - The model, manager and controller/memory are split while training, aka they are trained at the same time
 separately using different methods (example is manager uses REINFORCE), the losses are both task loss and resource loss
