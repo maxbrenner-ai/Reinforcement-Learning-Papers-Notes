@@ -1,5 +1,5 @@
 # Reinforcement Learning Papers Notes
-Notes on many interesting RL papers. Also some of the notes are a little messy because these were my personal notes to start off with but most of them should be a pretty understandable summary.
+Notes on many interesting RL papers. Also some of the notes are a little messy because these were my personal notes to start off with but most of them should be a pretty understandable summary. I would still recommend that you read the papers of course but these are good summaries to either give you a taste of the algorithms or help understand them.
 
 ### Important:
 Most of the papers on this list were found through [Deep Reinforcement Learning: An Overview](https://arxiv.org/pdf/1701.07274.pdf) which is a great source by Yuxi Li. The grouping also follows this source quite heavily.
@@ -13,6 +13,7 @@ I don't include notes for these papers or topics because there are plenty of res
 - [Continuous control with deep reinforcement learning](https://arxiv.org/abs/1509.02971) DDPG
 
 ## Notes:
+Look at end of doc for a list of shorthands used. However, it should be self explanatory in the notes what the word is.
 
 ## Policy Gradient
 ### Trust Region Policy Optimization (TRPO) (Under construction)
@@ -73,8 +74,8 @@ expert policy itself (unlike in IRL and GAIL which does have an expert policy to
 - You have 4 losses: Supervised, Q-Learning 1 step, Q-Learning n-step and L2 Reg used in the pre-training
 on the expert trajectories/data
 - Minibatch training is done both in the pre-training and normal training but the losses from above
-are also used in normal training (the whole alg is DQN which is how you pick the actions, and this is why exp
-replay is used (it's just the loss function (the 4 losses added) that is the substitute for normal MSE)
+are also used in normal training 
+    - the whole alg is DQN which is how you pick the actions, and this is why exp replay is used (it's just the loss function           (the 4 losses added) that is the substitute for normal MSE)
 
 ### Generalizing Skills with Semi-Supervised Reiforcement Learning (S3G)
 https://arxiv.org/pdf/1612.00429.pdf
@@ -110,7 +111,7 @@ https://arxiv.org/pdf/1602.02867.pdf
 - Not model-based because we aren't directly learning a model of M but planning off of M_
 - So if M is the MDP we can find M_ which is an MDP that gives info about the optimal plan for the specific M,
 and we have a reward function and transition function associated with M_ as well, where the reward func maps
-a state to a reward if near a goal ect. and the M_ trans func that encodes deterministic movements INDEPENDENT
+a state to a reward if near a goal ect. and the M_ trans func that encodes deterministic movements INDEPENDENTLY
 of the current state observation
     - This is very important because it allows for generalization, so if you can train an agent to learn
     a new maze without refreshing it
@@ -147,9 +148,9 @@ the difference by using an euclidean loss function, the novelty bonus is then ju
     - This works because the more we see a s-a pair the better our model is at predicting the next state
     so if our error is large than that means we haven't seen that s-a pair very much and therefore
     we need to explore it more (larger novelty bonus)
-        - Of course we won't see an exact s-a pair again like at all but approx has the same effect
+        - Of course we will rarely see an exact s-a pair again but approx has the same effect
 - So we train the model every some odd iterations based on exp replay
-- And we train the autoencoder even less (because it takes a long time to train since it must reconstruction and compare
+- And we train the autoencoder even less (because it takes a long time to train since it must reconstruct and compare
 the WHOLE state aka all the pixels every time)
 
 ### Deep Exploration via Bootstrapped DQN (Under Construction)
@@ -216,40 +217,39 @@ https://arxiv.org/pdf/1502.03044.pdf
 - This paper shows how to caption images
 - Unlike the paper "Recurrent Models of Visual Attention (RAM)" the attention mechanism used in this is here
 not to decrease computation time but to focus on specific features of an image every time step and output a word
-- The structure of this is like encoder-decoder
+- The structure of this is an encoder-decoder
 - The encoder is a CNN that process the whole image
     - It creates a list of feature vectors called annotation vectors
     - It picks these vectors from lower levels of the CNN, aka not after any dense layer, so that they
     correspond to different locations on the image (allows for focus on different parts of image)
-    - This is not like a seq-seq kind of thing because all the encoder is is a CNN not part of the LSTM
 - The decoder is a LSTM that uses the annotation vectors to output a caption
     - There is an attention model that is given the prev hidden state of the LSTM each time step and outputs
     weights for every annotation vector that was made in the encoder and then creates a combo of these
     weighted vectors to create a single context vector which is fed as input each step into the LSTM
-    (the encoder's annotation vectors it makes don't change at all, they are just combined in different
+    (the encoder's annotation vectors don't change at all, they are just combined in different
     ways in the decoder)
-    - Then given this context vector (and the prev hidden state OBVIOUSLY) the LSTM outputs a word
+    - Then given this context vector (and the prev hidden state) the LSTM outputs a word
 - There are two different ways to do the attention model (although the structure is a MLP either way):
     - Stochastic "Hard" Attention (performed the best in general): this uses REINFORCE to train
     - Deterministic "Soft" Attention
-    - Don't understand either really, there is a lot of math involved
-- So the encoder CNN learns how to find features in dif locations as it goes and send this to the decoder,
-the attention model in the decoder uses the prev hidden state of the LSTM (which represents what's already been
+- Summary of the process:
+- The encoder CNN learns how to find features in dif locations as it goes and then sends this to the decoder
+- The attention model in the decoder uses the prev hidden state of the LSTM (which represents what's already been
 focused on and what's been output) and the annotation vecs (features at dif locations) to create a representation
 of what should be focused on, aka given what's already been focused on it can learn how to pick other regions
-to focus on to actually understand what it's seeing in the image, and then the LSTM takes the context vector
-which is what it should focus on and learns to decode this (aka read it meaningfully) and give this and what its
-already output (to keep it grammatical aka natural language) to output another word that describes what it is
-seeing overall
+to focus on to actually understand what it's seeing in the image
+- So another word is output at each step by the decoder that describes what it is seeing overall
 
 ### Neural Machine Translation by Jointly Learning to Align and Translate 
 https://arxiv.org/pdf/1409.0473.pdf
 - This is a new encoder-decoder structure/algorithm for neural machine translation
 - encoder-decoder means an encoder rnn reads in a source sentence into a fixed length vector which is then
 input into the decoder at each step (along with the prev output word)
-- in this case we have an attention mechanism added called an alignment model which allows the decoder at each
-time step to look at the hidden states of the encoder at each time step and weight and combine them into
-a context vector to use as input to output its best prediction of the next translated word
+- The encoder is a bidirectional rnn which means it has a layer that reads forward and one that reads backward
+(starting at the opposite end) and at each timestep these layers hidden states are combined
+- In this case we have an attention mechanism added called an alignment model which allows the decoder, at each
+time step, to look at the hidden states (dif time steps) of the encoder and weigh and combine them into
+a context vector, which is then used as input to output its best prediction of the next translated word
     - this makes it so the encoder does not need to encode the source sentence all into one fixed length
     vector but allow the decoder to selectively choose (attention) which encoder info to look at
     - this is like the Image Captioning alg because that one also weighted annotation vectors into a context
@@ -264,13 +264,7 @@ vectors position matches the output that will occur at that current decoder time
 translated from the source words around the hidden state/annotation vector (because its bidirectional) and then
 if it says it has a high correlation it weights that annotation vector highly so it has more of an effect on
 what the decoder will output at that timestep as the translation
-- this works because the decoder at each time step not only knows it's prev output but also will find out
-what info from the encoder is most likely to help it output the next correct translated word through matching
-aka aligning the prev hidden state (decoder's) aka what has been output with the each annotation vec its judging
-to say a higher match must mean this annotation vector matters more at this time step for the correct translation
-- The encoder is a bidirectional rnn which means it has a layer that reads forward and one that reads backward
-(starting at the opposite end) and at each timestep these layers hidden states are combined
-
+- This greatly improves translation abilities of RNNs
 
 ## Unsupervised Learning
 ### Reinforcement Learning with Unsupervised Auxiliary Tasks (UNREAL)
@@ -292,12 +286,12 @@ https://arxiv.org/pdf/1611.05397.pdf
     from the memory and improve the value func
         - Gives the value approximator a bit of a boost
 - The base alg is A3C built with CNN and LSTM networks (LSTM because we need help remembering the past since
-each state is partially observed aka not a full summary of the past)
+each state is partially observed)
 - Each aux function uses its own DQN and model to do its thing and these models are trained to get better at
-the aux tasks, but in all cases the params are shared somehow between these aux task models and the main
+the aux tasks, but in all cases the params are shared between these aux task models and the main
 A3C (LSTM and CNN) model to balance improvement of the aux tasks with the improvement of the main task at hand
 - Also these aux tasks use Q-Learning (Off policy) so we can use a memory to train them, the transitions sampled
-from this memory are samples using a simplified Prioritized Replay method where there is a 50/50 chance to pick
+from this memory are sampled using a simplified Prioritized Replay method where there is a 50/50 chance to pick
 a transition with a non-zero imm reward and one with a zero reward, this helps with allowing to train on
 transitions with feedback more often
 - *** This alg is the state-of-the-art rl alg for sparse reward signals, it is better than vanilla A3C, Prioritized Dueling Double DQN ect. according to the authors
@@ -312,9 +306,9 @@ sequences)
 behavior patterns by chaining primitive actions in a meaningful way
 - STRAW learns to follow a plan when useful or replan when useful (a plan means a sequence of actions)
 - STRAW is an LSTM with two modules (action plan and commitment plan)
-- The action plan is a 2d matrix with time and all actions on the two axis, each value is the probability
+- The action plan is a 2d matrix with time and all actions on the two axes, each value is the probability
 of taking that action (softmax) at that timestep (every column is all the actions probabilities)
-- the commitment plan is a vector that is on the same axis of time (max time for these is a hyperparameter, it
+- the commitment plan is a vector that is on the same axis of time (max time for this is a hyperparameter, it
 pretty much represents how long a macro action can be maximally) and each value is a 1 or 0 which represents
 if it is following the current action plan at that time step (0) or replacing the action plan AND commitment
 plan itself (1), so it will learn to chain 0s together so we can actually get a macro-action to follow and then
@@ -328,7 +322,7 @@ add 1s in the replanning of the commitment plan to change the current macro acti
     however)
 - Note: When the action plan is being committed to aka the commitment plan is currently 0 then after each step
 each is shifted over aka the first column is removed and the last one has a blank column added to it
-- This was updated using a weird loss function but it used A3C
+- This was updated using a weird loss function but it used A3C as the base algorithm
 
 ### Hierarchical Deep Reinforcement Learning: Integrating Temporal Abstraction and Intrinsic Motivation (h-DQN)
 https://arxiv.org/pdf/1604.06057.pdf
@@ -336,7 +330,7 @@ https://arxiv.org/pdf/1604.06057.pdf
 - solving subproblems and goals and chaining them together to allow for more efficient exploration to
 solve the whole problem
     - aka the main goal of this is for better exploration to solve the problem
-- So this isn't for solving really the credit assignment problem it's for solving a problem where there are
+- So this isn't really for solving the credit assignment problem it's for solving a problem where there are
 hardly any points of feedback and therefore you need to explore to get to these sparse points
 - Alg called h-DQN
 - So we have a controller and a meta controller, the controller (DQN) takes an action given a state and goal,
@@ -345,34 +339,15 @@ the current goal is given by the meta-controller, once the controller has reache
 - The controller is hooked up to a critic (not in the sense of AC) which just gives it intrinsic rewards as it
 makes moves, these transitions are stored in a memory and a batch is selected from the memory at each time step
 to train it
-- As the controller continues to take actions extrinsic rewards (from the env) are saved up and once the
+- As the controller continues to take actions, extrinsic rewards (from the env) are saved up and once the
 goal is reached (or the episode terminates) the meta-controller uses the total amount of extrinsic reward
-received and saves that transition (aka what goal was chosen from the state and end state and the total rew)
+received and saves that transition (aka the current goal and the total rew)
 and also gets trained by replays of this memory (replay/training occurs at same time as controller trains)
 - The temporal abstraction comes because the meta-controller function of getting a new goal (aka feed forward)
 occurs for a fraction of the time the controller is outputting and taking new actions, aka the controller action
 taking loop is inside the meta-controller goal producing loop
 - Another paper on intrinsic motivation for exploration using a pseudo count based method
 https://arxiv.org/pdf/1606.01868.pdf (HARD PAPER, pretty much just math)
-
-### Stochastic Neural Network for Hierarchical Reinforcement Learning
-https://arxiv.org/pdf/1704.03012.pdf
-- this is an hierarchical architecture (THIS was a hard paper and might wanna read again once i know about SNNs)
-- it is for solving the problem of sparse rewards by adding skills (like in the minecraft paper) aka macro
-actions
-- This is dif from the minecraft paper which had explicit/predefined skills it was trying to train as this one
-uses an SNN (Stochastic Neural Network (an RBM is an example of one)) on a pre-training env to learn a
-variable number of skills
-- So a pre-training env is set up with proxy rewards, this env is simple and the rewards are NOT explicit in what
-skills they are trying to train the agent on, but like if it was robot it would get reward for for moving
-its arm at high speeds without dropping something in its hand, stuff like that more implicit to skills
-    - By using a SNN it can train multiple skills that are predefined i.e it learns what skills are useful
-    and how do them each effectively
-- Then in the real env the params of the SNN are frozen as is and it is hooked up to a manager neural network
-(the higher level of this hierarchical architecture) which can pick a skill from the SNN to use given the
-current state until a termination time step (aka just like the minecraft one) and this is trained to use these
-more effectively
-- the SNN and MNN are trained with TRPO
 
 ### A Deep Hierarchical Approach to Lifelong Learning in Minecraft (H-DRLN)
 https://arxiv.org/pdf/1604.07255.pdf
@@ -382,12 +357,11 @@ https://arxiv.org/pdf/1604.07255.pdf
 picks which skill to use when it's needed
 - A skill is a temporally extended action/option/macro action which just means it's a sequence of actions
 instead of just a primitive one
-- Deep Skill networks which represent each skill, these are pretrained on their own and also normal trained
-with the rest of the architecture, each one is trained using DQN (they are pretrained aka not trained when
+- Deep Skill networks which represent each skill, are pretrained on their own (they are pretrained aka not trained when
 the whole H-DRLN is being used, they are trained separately before)
 - A deep skill module combines these skill networks
-    - There is a DSN array which just holds each DSN separate
-    - or a Multi-skill distillation network which combines the layers of each skill and then only the
+    - There is a DSN array which just holds each seperate DSN
+    - or a Multi-skill distillation network which combines the layers (params) of each skill and then only the
     output layer is separate for each skill
         - Distillation is the transfer of knowledge from a teacher to a student or in this case
         multiple teachers to a student
@@ -397,6 +371,25 @@ and does not train the DSNs only the rest of it, this is because the DSNs are pr
 - So really the H-DRLN is trained on how to pick the best primitive action or skill just like a normal DQN
 because each DSN is trained separately of it and then there knowledge is distilled together if using the
 multi-task distiller module
+
+### Stochastic Neural Network for Hierarchical Reinforcement Learning (Under Construction)
+https://arxiv.org/pdf/1704.03012.pdf
+- this is an hierarchical architecture (Need to know more about SNNs to really understand this paper)
+- it is for solving the problem of sparse rewards by adding skills (like in the minecraft paper) aka macro
+actions
+- This is dif from the minecraft paper (H-DRLN) which had explicit/predefined skills it was trying to train as this one
+uses an SNN (Stochastic Neural Network (an RBM is an example of one)) on a pre-training env to learn a
+variable number of skills
+- So a pre-training env is set up with proxy rewards, this env is simple and the rewards are NOT explicit in what
+skills they are trying to train the agent on, but for example if it was robot it would get reward for for moving
+its arm at high speeds without dropping something in its hand, stuff more implicit to skills
+    - By using a SNN it can train multiple skills that are predefined i.e it learns what skills are useful
+    and how do them each effectively
+- Then in the real env the params of the SNN are frozen as is and it is hooked up to a manager neural network
+(the higher level of this hierarchical architecture) which can pick a skill from the SNN to use given the
+current state until a termination time step (aka just like the minecraft one) and this is trained to use these
+more effectively
+- the SNN and MNN are trained with TRPO
 
 
 ## Learning to Learn
@@ -411,21 +404,21 @@ RL procedure to guide its param training
 - This alg comes from the idea that you need prior biases to learn with less examples, and these biases can
 be achieved through having engineers put it into the system (like using a CNN) or through meta-learning
 - So once again there is an overarching RL procedure (A3C in this case) that goes through a group of different,
-but similar in the underlying principles, tasks while training an RNN which actually implements the lower-level
+but similar, in the underlying principles, tasks while training an RNN which actually implements the lower-level
 RL procedure that specifically finds the best policy for each specific task, then at the end of the task the
 RNN is refreshed but the overarching RL procedure has params (A3C params) that are trained from all of these
-different tasks and generalize between them (through a specific alg which i don't fully understand) so the RNN
+different tasks and generalize between them so the RNN
 can then implement a RL procedure for proceeding tasks that works even faster as it goes
 - An important note is that the RL procedure that the RNN implements is usually much different than the
 high level one, which shows generalization
 - Another note is that once the high-level sys is trained enough you could freeze its training of the RNN
-on the specific task and it will still improve
+on the specific task and the RNN will still improve as it goes
 
 ### RL^2: Fast Reinforcement Learning via Slow Reinforcement Learning
 https://arxiv.org/pdf/1611.02779.pdf
 - Like the paper "Learning to Reinforcement Learn"
 - The explanation of at least the RNN was a little clearer, so what is sent in as input at each time step is
-the prev action, current state, reward and termination flag from prev action
+the prev action, current state, reward and termination flag from the prev action
 - The output is an action or distribution of actions, aka you can think of each step of the rnn as the policy
 - The hidden state params represent the RL alg
 - you have to use an RNN and not like a MLP that resets every step because just like how a normal RL procedure
@@ -433,7 +426,7 @@ is through time we need this one to be too so that's why we use an RNN so it can
 of the way (only refreshes after a full MDP task is done)
     - So another way to think about it is a normal RL alg has the whole history affect its weights so we
     use an RNN so that the whole history can also affect it
-    - This is why we only refresh after every task because we don't care about the history but the meta RL
+    - This is why we only refresh after every task because we don't care about the history of the RNN at this point but the meta RL
     helps initialize the RNN weights to something useful (generalization)
 - This one use TRPO as the RL alg for the outer RL loop instead of A3C like the other one
 
@@ -455,13 +448,13 @@ it would take under the experts, we are trying to minimize this loss (this is wh
 performance and time)
 - We have a meta controller made of a controller, list of experts, a manager and a memory
 - The manager is a meta-level policy that decides whether to terminate the optimization and execute or
-to optimize on a different expert, given the history (aka both the controller and manager gets the history)
+to optimize on a different expert, given the history (aka both the controller and manager get the history)
 - There are all MLPs with the exception of the memory which is an LSTM
 - They all are trained through minimizing the total loss
-- The whole system learns better experts, while learning which expert to pick, and learns when to execute, and
-learns how to effectively encode the memory, learn to pick a control policy all to minimize the performance AND
+- The whole system learns better experts, while learning which expert to pick, and learns when to execute,
+learns how to effectively encode the memory, learns to pick a control policy all to minimize the performance AND
 computation time
-- This works specifically for contextual bandits
+- The main drawback is that this works specifically for contextual bandits only
 
 ### Learning Model-based Planning from Scratch (IBP)
 https://arxiv.org/pdf/1707.06170.pdf
@@ -476,8 +469,9 @@ follow when execution time arrives (it can also decide to just execute and not p
 - Every iteration (means every time 1 step occurs in the real env) the manager decides whether to execute without
 planning or plan first, the controller is the state to action policy that decides what action to take given a
 state (and history), it does this even if imagining, then the model evals the action aka it just predicts the
-next state and reward and this all is aggregated to memory aka fed into the memory which is an LSTM and this encodes
-a vector rep of the history
+next state and reward and this all is fed into the memory
+- The memory is an LSTM that encodes a vector rep of the history
+    - The memory is very important because it along with the current state is what is input into the controller, so when the imagination or planning process occurs the memory implicitly forms a plan for the controller to use when acting in the real world (and also when picking actions in the imagination phases)
 - Specifically the manager is a MLP that represents a policy, input: memory encoding, output:
 a route which means act, or pick any state in which to imagine a next action from (aka picks imagine)
     - There are three hyperparameter ways to let a manager pick an imagined state in the current iteration
@@ -493,18 +487,9 @@ action
 - The Model is an interaction network (https://arxiv.org/pdf/1612.00222.pdf), input: state and action, output
 next state and reward aka it maps states and actions to next states and rewards
 - The model, manager and controller/memory are split while training, aka they are trained at the same time
-separately using different methods (ex is manager uses REINFORCE), the losses are both task loss and resource loss
+separately using different methods (example is manager uses REINFORCE), the losses are both task loss and resource loss
 aka it tries to not only optimize task performance but also computation time at the same time, but different parts
 might only care about one or the other (controller and memory only train on the task loss)
-- Note: The way the imagination part before executing an action or seq of actions (if the manager continues to
-pick 'act') affects how the controller actually picks the actions in the real env is through the memory, the
-controller when executing does not explicitly pick like a plan or something, but when the imagination/planning
-part was happening all the info it got was sent into the memory LSTM and so it was encoded, then this info
-is sent into the controller at each execution time step along with the current state to make it so it follows
-the best path it found implicitly (aka through the encoding as it holds more info about what was just planned)
-while executing. So the manager will better learn what states to imagine from and encode that, the controller while
-planning will better learn how to pick actions (also applies to executing) and the memory will better learn
-how to effectively encode what just was planned with the past history to allow the execution to 'go as planned'
 
 ### Imagination-Augmented Agents for Deep Reinforcement Learning (I2A)
 https://arxiv.org/pdf/1707.06203.pdf
@@ -516,15 +501,15 @@ map a plan to a policy in the real env
     - in most model based rl the model is assumed to be perfect in the algorithm but usually it is an
     imperfect approx and therefore this leads to problems in learning, so by using it to guide the policy
     but not explicitly plan for it this method helps
-- The summary is this arch gets the current state and then through makes trajectories from imagination aka using
+- The summary is this arch gets the current state and then makes trajectories from imagination aka using
 an env model and a rollout policy it creates a set number of fixed length trajectories (makes up the imagination
-core) and then encodes each traj using a rollout encoder then we aggregate all these rollout embeddings and
+core) and then encodes each trajectory using a rollout encoder then we aggregate all these rollout embeddings and
 combine this with a model-free path to get the current policy (action prob for the current state) and state value
 - Imagination Core: this is the policy rollout and the env model
     - this is given the current state and makes multiple rollouts/trajectories
     - the env model is from a new type of NN called a action-conditional next-step predictor
     - the rollout policy is a normal NN that outputs a policy (action probs)
-    - the rollout encoder is an LSTM that encodes each traj backwards (aka last to first) to mimic bellman
+    - the rollout encoder is an LSTM that encodes each trajectory backwards (aka last to first) to mimic bellman
     backups (DP)
 - We then use an aggregator (NN) to combine these into a single representation
 - A model free path is created (using a normal model free agent) and this is combined with the aggregation
@@ -534,12 +519,11 @@ is through using a cross entropy kind of loss between the two policies in such a
 policy similar to the main policy, and this loss is added to the total loss as an aux loss
     - this main reason for this is because we want the rollout policy to also learn from the whole policy
     in becoming better at imagining
-    - this is like the other imagination based one above cuz in that one it was the same policy that was used
+    - this is like the other imagination based one above because in that one it was the same policy that was used for imagining and acting
 - The env model can be trained as we go or pre trained (pre is better), and so you can change how much the
 imagination based part affects the main policy based on how much pretraining the env model got
 - Using the main performance loss and these aux losses and maybe a resource loss we use A3C as the training alg
-on this architecture (this works cuz the arch outputs the policy and state value aka it can be used as an
-actor-critic model which is how it is trained)
+on this architecture
 
 
 ## Multi-Agent RL
@@ -553,25 +537,27 @@ at a time and after a set number of steps distributing (copy) its learning polic
 it would increase the stochasticity of the env if training all agents at the same time and in relation to this
 make it very hard for an agent to figure out the dynamics of the env with other intelligent agents counted
 as part of it
-- This method also allows for scalability for any number of agents cuz training cost would increase only
-feedforward cost for selecting an action (uses DQN)
+- This method also allows for scalability for any number of agents because training cost would increase only by
+feedforward cost for each agent for selecting an action (uses DQN)
 
 
 ## Misc.
 ### Universal Value Function Approximators
 http://proceedings.mlr.press/v37/schaul15.pdf
 - UVFA: V(s,g; param) aka it's just like approx a value per state but with a goal added in too, it uses a dif
-reward func for the imm reward which is just based on achieving the goal, aka i guess the imm rewards are no
+reward func for the imm reward which is just based on achieving the goal
+    - the imm rewards are no
 longer based on the env extrinsic rewards but only on the goal completion
 - The goals are handcrafted per domain along with the imm reward functions
-- The best way to train a nn to use this new value function is to embed the states (1 hot) and the goals (1 hot)
+- The best way to train a NN to use this new value function is to embed the states (1 hot) and the goals (1 hot)
 (means its tabular in this ex) like you would word2vec, then when going through an episode combine the
 embeddings of the state you are at and the current goal through an MLP to figure out the V of said s and g
 w.r.t params (since many times the state and goal space is far too big we build up a table as we go and embed
 the states and goals, separately with their embedding networks, and then combine)
-- The point of this paper it more so to show a new kind of value func approx alg can use, it in and of itself
-is not really an alg, but it can be used in alg that sub goals would help with in the case of enhancing
+- The point of this paper it more so to show a new kind of value func approx algorithms can use, it in and of itself
+is not really an alg, but it can be used in alg where sub goals would help, in the case of enhancing
 exploration and finding sparse rewards
+- Used in the "Hindsight Experience Replay" paper (and a few others in this list)
 
 ### A Simple Neural Network Module for Relational Reasoning (RN)
 https://arxiv.org/pdf/1706.01427.pdf
@@ -579,12 +565,12 @@ https://arxiv.org/pdf/1706.01427.pdf
 - You have a MLP g that takes as input a pair of objects (outputs a normal vector), you send in all combos
 of object pairs into g one at a time and then sum up the output for each one into a single vector, then
 send this as input into a MLP f which then outputs a softmax distribution over the number of classes which
-represents the answer to the question (stochastic obviously cuz softmax aka it's normal supervised learning)
+represents the answer to the question (supervised learning)
     - the g MLP represents the 'relation' in each object pair
     - the f MLP then takes the sum of all these pair relations and finds the meaningful relationship
     between all these pair relationships to answer the question
 - So to answer questions that have a picture we use a CNN to process the picture and from the last feature maps
-created (no dense layers) we grid it up into cells and then each cell (3d cell cuz multiple feature maps in
+created (no dense layers) we grid it up into cells and then each cell (3d cell because multiple feature maps in
 a stack) and represent each as a vector that represents an object (aka the CNN must learn to really find
 objects and process them as features)
 - We also have a LSTM to process and encode the question into a vector, we send this vector into each iteration
@@ -597,7 +583,7 @@ separate technically, their outputs just feed into one another, it's not a param
 
 ### Prioritized Experience Replay
 https://arxiv.org/pdf/1511.05952.pdf
-- Instead of uniformly randomly picking which exp to replay from the memory use stochastic prioritization based
+- Instead of uniformly randomly picking which exp to replay from the memory this uses stochastic prioritization based
 off of the most recent TD Error for that transition
 - So the probability of picking each transition is proportional to their TD Error (saved with the transition)
 - Initially set its priority to the max one it can have (when it's first made and added to the memory since it
@@ -616,9 +602,8 @@ the expectation would have been has it not been for a biased exp replay updating
 - So if you multiply the TD Error (aka how you're updating the agent) by the inverse of the priority you
 can help decrease the bias a bit
 - So also as the agent continues in an episode it will get more and more off in its choices if you aren't
-using IS (or enough of it) cuz it will get more and more off a trajectory that
-would actually occur given a non-biased picking of training transitions, so annealing is a thing to use
-which just means increase the amount of IS weighing you are doing (update less and less towards the dir
+using IS (or enough of it) because it will get more and more off a trajectory that
+would actually occur given a non-biased picking of training transitions, so use annealing, which just means increase the amount of IS weighing you are doing (update less and less towards the dir
 and mag of the TD Error as you go since it will be getting more and more off since its training as it goes)
 
 
@@ -628,7 +613,7 @@ https://arxiv.org/pdf/1509.03044.pdf
 - An LSTM was used as the NN for this algorithm to learn the states of a POMDP
 - Supervised Learning (LSTM) and Reinforcement Learning (DQN) Hybrid
 - The current observation is fed into the LSTM which outputs the predicted next observation and predicted reward,
-and uses the DQN to output the Q-val for the state-action pair
+and uses the DQN to output the Q-value for the state-action pair
 - The predicted next observation and predicted reward signals are compared with the actual next observation
 and reward and through this supervised step the differences are compared and the LSTM params are shifted
 - And the DQN predicted Q-value is compared with the bellman eq per normal and trained per a normal DQN RL step
@@ -669,7 +654,26 @@ complex and dynamic deep neural networks
 - The model is a seq-to-seq LSTM (Encoder-Decoder with an attention mechanism like the machine translation paper)
 and it is trained with REINFORCE (REINFORCE is used because the model acts as the policy and assigns the
 operations and then the program is run and the execution time is used as the final return, so no TD alg can be
-used cuz stuff only happens at the start and there is only the final return used)
+used because the operations are assigned only at the start and then the execution time is used for the reward)
+    - REINFORCE is used to go back through each placement step and uses BPTT to update the params
 - At each step the encoder takes in an operation (each operation is embedded into a vector) and then the decoder
 uses an content-based attention mech and assigns each op in order (hence the use of an LSTM) to a device
 - This worked very well, 20% improvement over experts and 350% improvement over prev algs
+
+
+### Shorthand:
+- alg | algorithm
+- approx | approximately
+- arch | architecture
+- aux | auxilary
+- dif | different/difference
+- env | environment
+- eq | equation
+- eval | evaluate/evaluation
+- ex | example
+- exp | experience(s)
+- func | function
+- imm | immidiate
+- param | parameters
+- rep | representation
+- req | require
