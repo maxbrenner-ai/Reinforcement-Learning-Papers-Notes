@@ -661,7 +661,7 @@ uses an content-based attention mech and assigns each op in order (hence the use
 - CNN | Convolutional Neural Network
 - DQN | Deep Q-Network
 - IRL | Inverse Reinforcement Learning
-- LSTM | Long Short-Term Memory (RNN)
+- LSTM | Long Short-Term Memory
 - MDP | Markov Decision Process
 - MLP | Multi-Layer Perceptron
 - MSE | Mean Squared Error
