@@ -1,5 +1,5 @@
 # Reinforcement Learning Papers Notes
-Notes on many interesting RL papers. Also some of the notes are a little messy because these were my personal notes to start off with but most of them should be a pretty understandable summary. I would still recommend that you read the papers of course but these are good summaries to either give you a taste of the algorithms or help understand them.
+This is a compilation of notes on many interesting RL papers. Also some of the notes are a little messy because these were my personal notes to start off with but most of them should be a pretty understandable summary. I would still recommend that you read the papers of course but these are good summaries to either give you a taste of the algorithms or help understand them.
 
 ### Important:
 Most of the papers on this list were found through [Deep Reinforcement Learning: An Overview](https://arxiv.org/pdf/1701.07274.pdf) which is a great source by Yuxi Li. The grouping also follows this source quite heavily.
