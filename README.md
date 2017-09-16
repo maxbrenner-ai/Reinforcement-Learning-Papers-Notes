@@ -645,5 +645,6 @@ uses an content-based attention mech and assigns each op in order (hence the use
 - imm | immidiate
 - obj | objective
 - param | parameters
+- prev | previous
 - rep | representation
 - req | require
