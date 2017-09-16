@@ -643,6 +643,7 @@ uses an content-based attention mech and assigns each op in order (hence the use
 - exp | experience(s)
 - func | function
 - imm | immidiate
+- obj | objective
 - param | parameters
 - rep | representation
 - req | require
