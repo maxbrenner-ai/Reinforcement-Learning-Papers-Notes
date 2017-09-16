@@ -636,6 +636,7 @@ uses an content-based attention mech and assigns each op in order (hence the use
 - arch | architecture
 - aux | auxilary
 - dif | different/difference
+- disc | discount
 - env | environment
 - eq | equation
 - eval | evaluate/evaluation
