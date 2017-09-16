@@ -370,7 +370,7 @@ its arm at high speeds without dropping something in its hand, stuff more implic
 (the higher level of this hierarchical architecture) which can pick a skill from the SNN to use given the
 current state until a termination time step (aka just like the minecraft one) and this is trained to use these
 more effectively
-- the SNN and MNN are trained with TRPO
+- the SNN and manager are trained with TRPO
 
 
 ## Learning to Learn
@@ -649,3 +649,27 @@ uses an content-based attention mech and assigns each op in order (hence the use
 - prev | previous
 - rep | representation
 - req | require
+- rew | reward
+- seq | sequence
+
+### Acronyms
+- A2C | Advantage Actor-Critic
+- A3C | Asynchronous Advantage Actor-Critic
+- AC | Actor-Critic
+- BP | Backpropagation
+- BPTT | Backpropagation Through Time
+- CNN | Convolutional Neural Network
+- DQN | Deep Q-Network
+- IRL | Inverse Reinforcement Learning
+- LSTM | Long Short-Term Memory (RNN)
+- MDP | Markov Decision Process
+- MLP | Multi-Layer Perceptron
+- MSE | Mean Squared Error
+- NN | Neural Network
+- POMDP | Partially Observable Markov Decision Process
+- RL | Reinforcement Learning
+- RNN | Recurrent Neural Network
+- SL | Supervised Learning
+- TD | Temporal Difference
+- TF | TensorFlow
+- TRPO | Trust Region Policy Optimization
